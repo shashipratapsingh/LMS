@@ -34,12 +34,6 @@ public class HomeController {
         user.setAuthorities(userDto.getAuthorities());
         return new ResponseEntity<>(this.userRepository.save(user), HttpStatus.CREATED);
     }
-    /*@GetMapping("/Principal")
-    public String getDashboard()
-    {
-        return "Principal page";
-    }*/
-
     @PostMapping("/login")
     public ResponseEntity<HttpStatus> login(@RequestBody UserDto userDto) throws Exception {
         Authentication authentication;
@@ -51,15 +45,5 @@ public class HomeController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-   /* @GetMapping("/Teacher")
-    public String getProfile()
-    {
-        return "Teacher page";
-    }*/
-    /*@GetMapping("/Student")
-    public String getStudent()
-    {
-        return "Student page";
-    }*/
 }
 
