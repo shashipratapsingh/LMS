@@ -23,10 +23,17 @@ public class MyConfigure extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/register","/login").permitAll()
-                .antMatchers("/Principal").hasRole("Principal") // Only Principal can access this
-                .antMatchers("/Teacher").hasAnyRole("Teacher", "Principal") // Teachers and Principals can access this
-                .antMatchers("/Student").hasAnyRole("Student", "Teacher", "Principal") // Students, Teachers, and Principals can access this
+                .antMatchers("/register", "/login").permitAll()
+                .antMatchers("/Principal/**").hasRole("Principal") // Principal can access everything
+                .antMatchers("/Teacher/**").hasAnyRole("Teacher", "Principal") // Teacher and Principal can access
+                .antMatchers("/Student/**").hasAnyRole("Student", "Teacher", "Principal") // Student, Teacher, and Principal can access
+                .anyRequest().authenticated()
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler((request, response, accessDeniedException) -> {
+                    response.setStatus(403);
+                    response.getWriter().write("Permission Denied");
+                })
                 .and()
                 .httpBasic();
     }
