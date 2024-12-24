@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/Teacher")
 public class TeacherController {
-    @GetMapping("/test")
+    @GetMapping("/healthcheck")
     public String getProfile()
     {
         return "Teacher DashBoard page";
