@@ -4,6 +4,7 @@ import com.LMS.Service.StudentService;
 import com.LMS.model.Student;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -24,11 +25,13 @@ public class StudentController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('Teacher') or hasRole('Principal')") // Restrict access
     public ResponseEntity<List<Student>> getAllStudents() {
         return ResponseEntity.ok(studentService.getAllStudents());
     }
 
     @GetMapping("/pagination")
+    @PreAuthorize("hasRole('Teacher') or hasRole('Principal')")
     public ResponseEntity<Page<Student>> getStudentsWithPagination(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
@@ -56,6 +59,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('Teacher') or hasRole('Principal')")
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.noContent().build();

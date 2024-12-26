@@ -52,8 +52,4 @@ public class PrincipalController {
         principalService.deletePrincipal(id);
         return ResponseEntity.noContent().build();
     }
-
-
-
-
 }

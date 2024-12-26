@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,8 +22,12 @@ public class TeacherController {
         return "Teacher DashBoard page";
     }
 
-    @Autowired
-    private TeacherService teacherService;
+    //@Autowired
+    private final TeacherService teacherService;
+
+    public TeacherController (TeacherService teacherService){
+        this.teacherService=teacherService;
+    }
 
     @PostMapping
     public ResponseEntity<Teacher> createTeacher(@Valid @RequestBody Teacher teacher) {
@@ -34,7 +39,8 @@ public class TeacherController {
         return ResponseEntity.ok(teacherService.getTeacherById(id));
     }
 
-    @GetMapping
+    @GetMapping("/pagination")
+    @PreAuthorize("hasRole('Principal')")
     public ResponseEntity<List<Teacher>> getAllTeachers(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
@@ -48,6 +54,7 @@ public class TeacherController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('Principal')")
     public ResponseEntity<Void> deleteTeacher(@PathVariable Long id) {
         teacherService.deleteTeacher(id);
         return ResponseEntity.noContent().build();
