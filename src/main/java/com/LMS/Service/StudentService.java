@@ -51,18 +51,18 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public Student partialUpdateStudent(Long id, Student partialDetails) {
-        Student student = getStudentById(id);
+    public Student partialUpdateStudent(Long id, Student student) {
+        Student studentById = getStudentById(id);
 
-        if (partialDetails.getName() != null) student.setName(partialDetails.getName());
-        if (partialDetails.getAddress() != null) student.setAddress(partialDetails.getAddress());
-        if (partialDetails.getMobileNo() != null) student.setMobileNo(partialDetails.getMobileNo());
-        if (partialDetails.getEmailId() != null) student.setEmailId(partialDetails.getEmailId());
-        if (partialDetails.getAdmissionDate() != null) student.setAdmissionDate(partialDetails.getAdmissionDate());
-        if (partialDetails.getCourse() != null) student.setCourse(partialDetails.getCourse());
-        if (partialDetails.getBranch() != null) student.setBranch(partialDetails.getBranch());
+        if (student.getName() != null) student.setName(student.getName());
+        if (student.getAddress() != null) student.setAddress(student.getAddress());
+        if (student.getMobileNo() != null) student.setMobileNo(student.getMobileNo());
+        if (student.getEmailId() != null) student.setEmailId(student.getEmailId());
+        if (student.getAdmissionDate() != null) student.setAdmissionDate(student.getAdmissionDate());
+        if (student.getCourse() != null) student.setCourse(student.getCourse());
+        if (student.getBranch() != null) student.setBranch(student.getBranch());
 
-        return studentRepository.save(student);
+        return studentRepository.save(studentById);
     }
 
     public void deleteStudent(Long id) {
